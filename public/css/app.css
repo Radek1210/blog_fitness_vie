@@ -1,0 +1,23 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+html, .visitor-body {
+    height: 100%;
+}
+
+body {
+    background: #D8DFD7;
+}
+
+.visitor-body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    color: #2D4D44;
+    font-size: x-large;
+}
+
