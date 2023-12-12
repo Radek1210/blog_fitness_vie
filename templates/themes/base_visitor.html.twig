@@ -68,11 +68,11 @@
                             <a class="nav-link" href="#">Espace privé</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{path('visitor.authentication.login')}}">Déconnexion</a>
+                            <a class="nav-link" href="{{path('visitor.authentication.logout')}}">Déconnexion</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{path('visitor.authentication.logout')}}">Connexion</a>
+                            <a class="nav-link" href="{{path('visitor.authentication.login')}}">Connexion</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{path('app_register')}}">Inscription</a>
