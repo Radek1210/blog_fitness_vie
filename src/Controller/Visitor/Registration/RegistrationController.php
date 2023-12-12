@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Visitor\Registration;
+
+
 
 use App\Entity\User;
 use DateTimeImmutable;
