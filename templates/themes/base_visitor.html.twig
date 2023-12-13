@@ -64,19 +64,26 @@
                     <a class="navbar-brand mx-auto" href="{{path('visitor.welcome.index')}}">Fitness-vie</a>
                     <ul class="navbar-nav">
                         {% if app.user %}
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Espace privé</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{path('visitor.authentication.logout')}}">Déconnexion</a>
-                        </li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{path('admin.home.index')}}">Espace admin</a>
+                                </li>
+                            {% endif %}
+                            {% if is_granted('ROLE_USER') %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Espace privé</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{path('app.logout')}}">Déconnexion</a>
+                            </li>
                         {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{path('visitor.authentication.login')}}">Connexion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{path('app_register')}}">Inscription</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{path('visitor.authentication.login')}}">Connexion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{path('app_register')}}">Inscription</a>
+                            </li>
                         {% endif %}
                         
                     </ul>
