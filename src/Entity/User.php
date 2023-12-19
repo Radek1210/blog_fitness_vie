@@ -16,67 +16,74 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email.')]
+#[UniqueEntity(fields: ['email'], message: "Impossible de créer un compte avec cet email.")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    
+
+
     #[Assert\NotBlank(message: "Le prénom est obligatoire.")]
     #[Assert\Length(
         max: 255,
-        maxMessage: 'Le prénom ne doit pas dépasser {{ limit }} caratères.',
+        maxMessage: "Le prénom ne doit pas dépasser {{ limit }} caractères.",
     )]
     #[Assert\Regex(
         pattern: "/^[0-9a-zA-Z-_' áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]+$/i",
         match: true,
-        message: "Le prénom doit contenir uniquement des lettres, des chiffres le tiret du milieu, l'undescore.",
+        message: 'Le prénom doit contenir uniquement des lettres, des chiffres le tiret du milieu, l\'undescore.',
     )]
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
 
-
+    
 
     #[Assert\NotBlank(message: "Le nom est obligatoire.")]
     #[Assert\Length(
         max: 255,
-        maxMessage: 'Le nom ne doit pas dépasser {{ limit }} caratères.',
+        maxMessage: "Le nom ne doit pas dépasser {{ limit }} caractères.",
     )]
     #[Assert\Regex(
         pattern: "/^[0-9a-zA-Z-_' áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]+$/i",
         match: true,
-        message: "Le nom doit contenir uniquement des lettres, des chiffres le tiret du milieu, l'undescore.",
+        message: 'Le nom doit contenir uniquement des lettres, des chiffres le tiret du milieu, l\'undescore.',
     )]
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
-
+    
 
     #[Assert\NotBlank(message: "L'email est obligatoire.")]
     #[Assert\Length(
         max: 180,
-        maxMessage: "L'email ne doit pas dépasser {{ limit }} caratères.",
+        maxMessage: "L'email ne doit pas dépasser {{ limit }} caractères.",
     )]
-    #[Assert\Email(message: "L'email {{ value }} n'est pas valide.",)]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
+    
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
 
+
     #[ORM\Column]
     private array $roles = [];
+
+
 
     /**
      * @var string The hashed password
      */
     #[Assert\NotBlank(message: "Le mot de passe est obligatoire.")]
     #[Assert\Length(
+        min: 12,
         max: 255,
-        maxMessage: "Le mot de passe ne doit pas dépasser {{ limit }} caratères.",
+        minMessage: "Le mot de passe doit contenir au minimum {{ limit }} caractères.",
+        maxMessage: "Le mot de passe ne doit pas dépasser {{ limit }} caractères.",
     )]
     #[Assert\Regex(
         pattern: "/^(?=.*[a-zà-ÿ])(?=.*[A-ZÀ-Ỳ])(?=.*[0-9])(?=.*[^a-zà-ÿA-ZÀ-Ỳ0-9]).{11,255}$/",
@@ -86,15 +93,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotCompromisedPassword(message: "Ce mot de passe est facilement piratable. Veuillez en choisir un autre.")]
     #[ORM\Column]
     private ?string $password = null;
-    
+
 
 
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
+
+
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $verifiedAt = null;
+
+
 
     #[Gedmo\Timestampable(on: 'update')]
     #[ORM\Column(nullable: true)]
@@ -103,7 +114,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class)]
     private Collection $posts;
 
-    
+
+
     public function __construct()
     {
         $this->roles[] = "ROLE_USER";
@@ -121,7 +133,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(?string $email): static
     {
         $this->email = $email;
 
@@ -165,7 +177,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
 
@@ -186,7 +198,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): static
+    public function setFirstName(?string $firstName): static
     {
         $this->firstName = $firstName;
 
@@ -198,7 +210,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): static
+    public function setLastName(?string $lastName): static
     {
         $this->lastName = $lastName;
 
@@ -282,4 +294,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }
