@@ -6,9 +6,9 @@ html, .visitor-body {
     height: 100%;
 }
 
-body {
+/* body {
     background: #D8DFD7;
-}
+} */
 
 .visitor-body {
     display: grid;
@@ -19,5 +19,9 @@ body {
     font-family: 'Poppins', sans-serif;
     color: #2D4D44;
     font-size: x-large;
+}
+
+.active-color {
+    color: #ff0000 !important;
 }
 
